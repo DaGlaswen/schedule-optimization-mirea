@@ -5,21 +5,21 @@ from algorithm.Fish import Fish
 
 
 class FSS:
-    def __init__(self, schedule, num_fish = 30,
+    def __init__(self, func_to_optimize, num_fish = 30,
                  max_iter = 100, step_size = 0.1, chaos_step_size = 5):
         # Инициализация алгоритма оптимизации
-        self.schedule = schedule # TODO поменять контейнеры на расписание
-        self.num_fish = num_fish
+        self.func_to_optimize = func_to_optimize
+        self.num_fish = num_fish # количество рыб
         self.max_iter = max_iter
         self.step_size = step_size
         self.chaos_step_size = chaos_step_size
-        self.population = [self.initialize_solution() for _ in range(num_fish)]
+        self.population = [self.initialize_solution() for _ in range(num_fish)] # популяция изначальных расписаний
         self.best_solution = None
         self.best_score = float('inf')
         self.history = []  # История лучших результатов
         self.avg_history = []  # Среднее значение оценок
         self.std_dev_history = []  # Стандартное отклонение оценок
-        self.fish_swarm = [Fish(random.uniform(0, 100), random.uniform(0, 100), weight=2) for _ in range(num_fish)]  # Инициализация веса
+        self.fish_swarm = [Fish(random.uniform(0, 100), random.uniform(0, 100), weight=2) for _ in range(num_fish)]  # Инициализация рыб - их веса, x, y
 
     def initialize_solution(self):
         # Инициализация начального решения
@@ -68,7 +68,6 @@ class FSS:
             scores = []
             for i in range(self.num_fish):
                 self.fish_swarm[i].move_chaotically(self.chaos_step_size)
-                schedule.
                 new_solution = self.perturb_solution(self.population[i])
                 new_score = self.evaluate(new_solution)
                 scores.append(new_score)
